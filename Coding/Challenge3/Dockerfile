@@ -1,14 +1,11 @@
-FROM python:3.12-alpine
-
+FROM php:8.2-alpine
+RUN apk add --no-cache python3 socat
 RUN adduser -D -u 1000 chal
-
 WORKDIR /home/chal
-
-COPY chall3.py .
-RUN chmod 755 chall3.py && chown chal:chal chall3.py
-
+COPY coding_challenge3.py flag.txt ./
+RUN chmod 755 coding_challenge3.py && \
+    chmod 444 flag.txt && \
+    chown chal:chal coding_challenge3.py flag.txt
 USER chal
-
-EXPOSE 9999
-
-CMD ["socat", "-T", "60", "TCP-LISTEN:9999,reuseaddr,fork", "EXEC:python3 chall3.py,stderr"]
+EXPOSE 80
+CMD ["socat", "-T", "60", "TCP-LISTEN:80,reuseaddr,fork", "EXEC:python3 coding_challenge3.py,stderr"]
