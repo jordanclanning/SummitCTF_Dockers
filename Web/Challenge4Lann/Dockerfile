@@ -1,15 +1,8 @@
-FROM php:8.2-apache
-
-RUN apt-get update && apt-get install -y iputils-ping --no-install-recommends \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN useradd -m -u 1000 chal
-
-COPY index.php /var/www/html/index.php
-COPY flag.txt /flag.txt
-
-RUN chmod 444 /flag.txt
-
-EXPOSE 80
-
-CMD ["apache2-foreground"]
+FROM php:8.2-alpine
+RUN apk add --no-cache socat iputils && adduser -D -u 1000 chal
+WORKDIR /home/chal
+COPY server.py flag.txt ./
+RUN chmod 444 flag.txt && chown chal:chal server.py flag.txt
+USER chal
+EXPOSE 9999
+CMD ["socat", "-T", "60", "TCP-LISTEN:9999,reuseaddr,fork", "EXEC:python3 server.py,stderr"]
