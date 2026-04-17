@@ -6,3 +6,4 @@ COPY auth.js /var/www/html/auth.js
 EXPOSE 80
 
 CMD ["apache2-foreground"]
+ 
