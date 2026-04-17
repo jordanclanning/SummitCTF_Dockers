@@ -4,7 +4,6 @@ $flag_content = "";
 if (file_exists("flag.txt")) {
     $flag_content = trim(file_get_contents("flag.txt"));
 }
-
 // Deliberately insecure cookie (NOT HttpOnly)
 // Looks like an ops token, but actually the flag
 setcookie(
@@ -70,4 +69,11 @@ All feedback is reviewed by airport staff.
 if (isset($_GET['comment'])) {
     $comment = $_GET['comment'];
     // ❌ Naive XSS filtering (intentionally flawed)
-    $blocked = ['<script>', '</scrip>']
+    $blocked = ['<script>', '</script>'];
+    $comment = str_ireplace($blocked, '', $comment);
+    echo $comment;
+}
+?>
+</div>
+</body>
+</html>
