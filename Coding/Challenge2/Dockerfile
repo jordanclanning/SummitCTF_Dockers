@@ -1,14 +1,14 @@
-FROM python:3.11-slim
+FROM python:3.12-alpine
 
-RUN apt-get update && apt-get install -y socat && rm -rf /var/lib/apt/lists/*
+RUN adduser -D -u 1000 chal
 
-WORKDIR /challenge
+WORKDIR /home/chal
 
-COPY challenge2-easy.py .
+COPY chall2.py .
+RUN chmod 755 chall2.py && chown chal:chal chall2.py
 
-RUN useradd -m ctf && chown -R ctf:ctf /challenge
-USER ctf
+USER chal
 
-EXPOSE 1337
+EXPOSE 9999
 
-CMD ["socat", "TCP-LISTEN:1337,reuseaddr,fork", "EXEC:'python3 -u challenge2-easy.py'"]
+CMD ["socat", "-T", "60", "TCP-LISTEN:9999,reuseaddr,fork", "EXEC:python3 chall2.py,stderr"]
