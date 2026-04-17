@@ -70,4 +70,4 @@ All feedback is reviewed by airport staff.
 if (isset($_GET['comment'])) {
     $comment = $_GET['comment'];
     // ❌ Naive XSS filtering (intentionally flawed)
-    $blocked = ['<script>', '</scrip
+    $blocked = ['<script>', '</scrip>']
