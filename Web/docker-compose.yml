@@ -1,0 +1,37 @@
+services:
+  challenge1:
+    build: ./challenge1-html
+    ports:
+      - "8001:80"
+
+  challenge2:
+    build: ./challenge2-js
+    ports:
+      - "8002:80"
+
+  challenge3:
+    build: ./challenge3-php
+    ports:
+      - "8003:80"
+
+  challenge4:
+    build: ./challenge4-php
+    ports:
+      - "8004:80"
+
+  challenge5:
+    build: ./challenge5-sqli
+    ports:
+      - "8005:80"
+    depends_on:
+      - challenge5-db
+
+  challenge5-db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: Summit
+      MYSQL_USER: ctfuser
+      MYSQL_PASSWORD: ctfpass
+    volumes:
+      - ./challenge5-sqli/init.sql:/docker-entrypoint-initdb.d/init.sql
