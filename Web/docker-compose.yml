@@ -1,37 +1,61 @@
 services:
-  challenge1:
-    build: ./challenge1-html
-    ports:
-      - "8001:80"
 
-  challenge2:
-    build: ./challenge2-js
+  web-challenge1:
+    build: ./Challenge1Lann
+    container_name: web-challenge1
+    restart: unless-stopped
     ports:
-      - "8002:80"
+      - "9001:80"
+    read_only: true
+    tmpfs: ["/tmp", "/var/run/apache2", "/var/log/apache2", "/var/lock/apache2"]
+    pids_limit: 64
+    mem_limit: 128m
+    security_opt: ["no-new-privileges:true"]
 
-  challenge3:
-    build: ./challenge3-php
+  web-challenge2:
+    build: ./Challenge2Lann
+    container_name: web-challenge2
+    restart: unless-stopped
     ports:
-      - "8003:80"
+      - "9002:80"
+    read_only: true
+    tmpfs: ["/tmp", "/var/run/apache2", "/var/log/apache2", "/var/lock/apache2"]
+    pids_limit: 64
+    mem_limit: 128m
+    security_opt: ["no-new-privileges:true"]
 
-  challenge4:
-    build: ./challenge4-php
+  web-challenge3:
+    build: ./Challenge3Lann
+    container_name: web-challenge3
+    restart: unless-stopped
     ports:
-      - "8004:80"
+      - "9003:80"
+    read_only: true
+    tmpfs: ["/tmp", "/var/run/apache2", "/var/log/apache2", "/var/lock/apache2"]
+    pids_limit: 64
+    mem_limit: 128m
+    security_opt: ["no-new-privileges:true"]
 
-  challenge5:
-    build: ./challenge5-sqli
+  web-challenge4:
+    build: ./Challenge4Lann
+    container_name: web-challenge4
+    restart: unless-stopped
     ports:
-      - "8005:80"
-    depends_on:
-      - challenge5-db
+      - "9004:80"
+    read_only: true
+    tmpfs: ["/tmp", "/var/run/apache2", "/var/log/apache2", "/var/lock/apache2"]
+    pids_limit: 64
+    mem_limit: 128m
+    security_opt: ["no-new-privileges:true"]
 
-  challenge5-db:
-    image: mysql:8.0
-    environment:
-      MYSQL_ROOT_PASSWORD: rootpass
-      MYSQL_DATABASE: Summit
-      MYSQL_USER: ctfuser
-      MYSQL_PASSWORD: ctfpass
-    volumes:
-      - ./challenge5-sqli/init.sql:/docker-entrypoint-initdb.d/init.sql
+  web-challenge5:
+    build: ./Challenge5Lann
+    container_name: web-challenge5
+    restart: unless-stopped
+    ports:
+      - "9005:80"
+    read_only: true
+    tmpfs: ["/tmp", "/var/run/apache2", "/var/log/apache2", "/var/lock/apache2"]
+    pids_limit: 64
+    mem_limit: 128m
+    security_opt: ["no-new-privileges:true"]
