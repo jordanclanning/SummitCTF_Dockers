@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Summit International Airport – Network Operations Console</title>
-
     <style>
         body {
             background-color: #0b1c2d;
@@ -41,35 +40,26 @@
         }
     </style>
 </head>
-
 <body>
-
 <h1>Summit International Airport</h1>
 <h3>Network Operations & Diagnostics Console</h3>
-
 <p>Enter beacon IP or hostname for ICMP validation:</p>
-
 <form method="GET">
     <input type="text" name="host" placeholder="127.0.0.1">
     <input type="submit" value="Run Diagnostics">
 </form>
-
 <pre>
 <?php
 if (isset($_GET['host'])) {
-
     // Raw user input
     $host = $_GET['host'];
-
     // ❌ Naive blacklist filtering (intentionally flawed)
     $blocked = [';', '&', '|', '&&', '||'];
     $host = str_replace($blocked, '', $host);
-
     // Execute diagnostics (stderr redirected to stdout)
     system("ping -c 1 " . $host . " 2>&1");
 }
 ?>
 </pre>
-
 </body>
 </html>
