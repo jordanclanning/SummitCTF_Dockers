@@ -10,6 +10,6 @@ RUN chmod 444 flag.txt && chown chal:chal index.php flag.txt
 
 USER chal
 
-EXPOSE 9999
+EXPOSE 80
 
-CMD ["php", "-S", "0.0.0.0:9999"]
+CMD ["php", "-S", "0.0.0.0:80"]
