@@ -1,20 +1,24 @@
 <?php
+// Read flag from file (not visible in source)
+$flag_content = "";
+if (file_exists("flag.txt")) {
+    $flag_content = trim(file_get_contents("flag.txt"));
+}
+
 // Deliberately insecure cookie (NOT HttpOnly)
 // Looks like an ops token, but actually the flag
 setcookie(
     "ops_session",
-    "Summit{Passenger_Feedback_Exposed_Client_Side_Data}",
+    $flag_content,
     time() + 3600,
     "/"
 );
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Summit International Airport – Passenger Feedback</title>
-
     <style>
         body {
             background-color: #0b1c2d;
@@ -48,41 +52,22 @@ setcookie(
         }
     </style>
 </head>
-
 <body>
-
 <h1>Summit International Airport</h1>
 <h3>Passenger Feedback Portal</h3>
-
 <p>
 Help us improve airport operations.  
 All feedback is reviewed by airport staff.
 </p>
-
 <form method="GET">
     <input type="text" name="comment" placeholder="Enter feedback here">
     <input type="submit" value="Submit Feedback">
 </form>
-
 <hr>
-
 <p><strong>Latest Comment:</strong></p>
-
 <div class="comment-box">
 <?php
 if (isset($_GET['comment'])) {
-
     $comment = $_GET['comment'];
-
     // ❌ Naive XSS filtering (intentionally flawed)
-    $blocked = ['<script>', '</script>'];
-    $comment = str_replace($blocked, '', $comment);
-
-    // Vulnerable output
-    echo $comment;
-}
-?>
-</div>
-
-</body>
-</html>
+    $blocked = ['<script>', '</scrip
